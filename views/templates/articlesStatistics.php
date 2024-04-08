@@ -20,12 +20,12 @@
     </thead>
     <tbody>
         <?php foreach ($articles as $article) { ?>
-            <tr>
-                <td><?= $article['title'] ?></td>
-                <td><?= $article['totalViews'] ?></td>
-                <td><?= $article['totalComments'] ?></td>
-                <td><?= $article['date'] ?></td>
-            </tr>
+        <tr>
+            <td><?= $article->getTitle() ?></td>
+            <td><?= $totalViewsByArticles[$article->getId()] ?></td>
+            <td><?= $totalCommentsByArticles[$article->getId()] ?></td>
+            <td><?= Utils::convertDateToFrenchFormat($article->getDateCreation()) ?></td>
+        </tr>
         <?php } ?>
     </tbody>
 </table>

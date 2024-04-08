@@ -92,4 +92,21 @@ class ArticleManager extends AbstractEntityManager
         $sql = "DELETE FROM article WHERE id = :id";
         $this->db->query($sql, ['id' => $id]);
     }
+
+    /**
+     * Récupère le total des vues pour chaque article.
+     * @return array : un tableau associatif avec l'ID de chaque article comme clé et le total des vues pour cet article comme valeur.
+     */
+    public function getTotalViewsByArticles(): array
+    {
+        $sql = "SELECT id, views FROM article";
+        $result = $this->db->query($sql);
+        $articleViews = [];
+
+        while ($article = $result->fetch(PDO::FETCH_OBJ)) {
+            $articleViews[$article->id] = $article->views;
+        }
+
+        return $articleViews;
+    }
 }

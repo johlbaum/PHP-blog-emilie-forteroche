@@ -65,4 +65,20 @@ class CommentManager extends AbstractEntityManager
         $result = $this->db->query($sql, ['id' => $comment->getId()]);
         return $result->rowCount() > 0;
     }
+
+    /**
+     * Récupère le total des commentaires pour chaque article.
+     * @param array $articles : un tableau d'objets Article.
+     * @return array : un tableau associatif avec l'ID de chaque article comme clé et le total des commentaires pour cet article comme valeur.
+     */
+    public function getTotalCommentsByArticles($articles): array
+    {
+        $totalCommentsByArticles = [];
+        foreach ($articles as $article) {
+            //Retourne un tableau d'objets de tous les commentaires d'un article.
+            $allCommentsByArticleId = $this->getAllCommentsByArticleId($article->getId());
+            $totalCommentsByArticles[$article->getId()] = count($allCommentsByArticleId);
+        }
+        return $totalCommentsByArticles;
+    }
 }

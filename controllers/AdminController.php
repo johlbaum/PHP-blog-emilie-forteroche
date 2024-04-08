@@ -28,40 +28,31 @@ class AdminController
     }
 
     /**
-     * Affiche la page de statistiques des articles.
+     * Affiche le tableau des données statistiques.
      * @return void
      */
-    public function showStatisticsTable(): void
+    public function showStatistics(): void
     {
         // On vérifie que l'utilisateur est connecté.
         $this->checkIfUserIsConnected();
 
-        $articles = [
-            [
-                "title" => "Title 1",
-                "totalComments" => "50",
-                "totalViews" => "25",
-                "date" => "04/2024"
-            ],
-            [
-                "title" => "Title 2",
-                "totalComments" => "10",
-                "totalViews" => "20",
-                "date" => "04/2024"
-            ],
-            [
-                "title" => "Title 3",
-                "totalComments" => "20",
-                "totalViews" => "10",
-                "date" => "04/2024"
-            ],
-        ];
+        // On récupère les données.
+        $commentManager = new CommentManager;
+        $articleManager = new ArticleManager;
+        $statisticsService = new StatisticsService($commentManager, $articleManager);
 
+        $articles = $statisticsService->getArticle();
+        $totalCommentsByArticles = $statisticsService->getTotalCommentsByArticles();
+        $totalViewsByArticles = $statisticsService->getTotalViewsByArticles();
+
+        // On affiche le tableau.
         $view = new View("Statistics");
         $view->render(
             "articlesStatistics",
             [
-                'articles' => $articles
+                'articles' => $articles,
+                'totalCommentsByArticles' => $totalCommentsByArticles,
+                'totalViewsByArticles' => $totalViewsByArticles,
             ]
         );
     }

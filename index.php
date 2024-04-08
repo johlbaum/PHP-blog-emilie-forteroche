@@ -46,7 +46,7 @@ try {
 
         case 'statistics':
             $analyticsController = new AdminController();
-            $analyticsController->showStatisticsTable();
+            $analyticsController->showStatistics();
             break;
 
         case 'connectionForm':
