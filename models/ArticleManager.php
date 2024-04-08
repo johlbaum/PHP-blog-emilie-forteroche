@@ -109,4 +109,15 @@ class ArticleManager extends AbstractEntityManager
 
         return $articleViews;
     }
+
+    /**
+     * Incrémente le nombre de vues d'un article de 1 lors de sa consutation.
+     * @param int $id : l'id de l'article pour lequel on augmente le nombre de vues.
+     * @return void
+     */
+    public function incrementArticleViews(int $id): void
+    {
+        $sql = "UPDATE article SET views = views + 1 WHERE id = :article_id";
+        $this->db->query($sql, ['article_id' => $id]);
+    }
 }
