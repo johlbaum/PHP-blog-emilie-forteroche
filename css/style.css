@@ -237,7 +237,6 @@ a.info {
     font-style: normal;
 }
 
-
 /* Page de détail d'un article */
 
 .mainArticle .footer {
@@ -306,6 +305,30 @@ a.info {
 /**
  * Partie admin
  */ 
+
+ .adminHeader {
+    display: flex;
+    width: 100%;
+    margin-bottom: 30px;
+    justify-content: center;
+    margin-top: 35px;
+ }
+
+.adminHeader h2 {
+    width: auto;
+    border: 1px solid #d79922;
+    padding: 10px;
+    border-radius: 3px;
+    background-color: #fff;
+    color: #d79922b0;
+    font-size: 20px;
+    margin: 10px 15px;
+ }
+
+ .adminHeader .isActive {
+    background-color: #d79922;
+    color: #fff;
+ } 
 
 .adminArticle {
     margin-bottom: 20px;

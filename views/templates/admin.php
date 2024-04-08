@@ -6,7 +6,10 @@
  */
 ?>
 
-<h2>Edition des articles</h2>
+<div class="adminHeader">
+    <h2 class="isActive"><a href="index.php?action=admin">Edition des articles</a></h2>
+    <h2><a href="index.php?action=analytics">Statistique des Articles</a></h2>
+</div>
 
 <div class="adminArticle">
     <?php foreach ($articles as $article) { ?>
