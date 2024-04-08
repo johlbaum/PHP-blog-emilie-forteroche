@@ -8,7 +8,7 @@
 
 <div class="adminHeader">
     <h2 class="isActive"><a href="index.php?action=admin">Edition des articles</a></h2>
-    <h2><a href="index.php?action=analytics">Statistique des Articles</a></h2>
+    <h2><a href="index.php?action=statistics">Statistique des Articles</a></h2>
 </div>
 
 <div class="adminArticle">

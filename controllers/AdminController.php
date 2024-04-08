@@ -28,6 +28,45 @@ class AdminController
     }
 
     /**
+     * Affiche la page de statistiques des articles.
+     * @return void
+     */
+    public function showStatisticsTable(): void
+    {
+        // On vérifie que l'utilisateur est connecté.
+        $this->checkIfUserIsConnected();
+
+        $articles = [
+            [
+                "title" => "Title 1",
+                "totalComments" => "50",
+                "totalViews" => "25",
+                "date" => "04/2024"
+            ],
+            [
+                "title" => "Title 2",
+                "totalComments" => "10",
+                "totalViews" => "20",
+                "date" => "04/2024"
+            ],
+            [
+                "title" => "Title 3",
+                "totalComments" => "20",
+                "totalViews" => "10",
+                "date" => "04/2024"
+            ],
+        ];
+
+        $view = new View("Statistics");
+        $view->render(
+            "articlesStatistics",
+            [
+                'articles' => $articles
+            ]
+        );
+    }
+
+    /**
      * Vérifie que l'utilisateur est connecté.
      * @return void
      */

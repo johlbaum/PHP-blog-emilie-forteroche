@@ -169,7 +169,6 @@ main {
 }
 
 /* Affichage des articles */
-
 .articleList {
     display: flex;
     flex-direction: row;
@@ -238,7 +237,6 @@ a.info {
 }
 
 /* Page de détail d'un article */
-
 .mainArticle .footer {
     display: flex;
     flex-direction: column;
@@ -305,7 +303,6 @@ a.info {
 /**
  * Partie admin
  */ 
-
  .adminHeader {
     display: flex;
     width: 100%;
@@ -358,6 +355,41 @@ a.info {
 .articleLine > div {
     padding: 20px;
     border: 1px solid var(--backgroundColor);
+}
+
+/**
+ * Partie admin -> Statistiques
+ */ 
+ td  {
+    padding: 20px;
+    text-align: center;
+}
+
+th  {
+    padding: 20px;
+    background-color: #255E33;
+    color: #fff;
+}
+
+tr td:first-child {
+    text-align: left;
+}
+
+tr:nth-child(odd) {
+    background-color: #99a140;
+    color: #fff; 
+}
+
+tr:nth-child(even) {
+    background-color: #efe1ba; 
+}
+
+.sort-indicator {
+    cursor: pointer;
+}
+
+.active {
+    color: red;
 }
 
 /** 
