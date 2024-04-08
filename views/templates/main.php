@@ -15,6 +15,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/b14f14ea95.js" crossorigin="anonymous"></script>
     <title>Emilie Forteroche</title>
     <link rel="stylesheet" href="./css/style.css">
 </head>

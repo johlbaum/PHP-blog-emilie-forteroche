@@ -306,24 +306,28 @@ a.info {
  .adminHeader {
     display: flex;
     width: 100%;
-    margin-bottom: 30px;
-    justify-content: center;
-    margin-top: 35px;
+    margin-bottom: 40px;
+    justify-content: start;
+    margin-top: 50px;
+    padding-left: 25px;
  }
 
 .adminHeader h2 {
     width: auto;
-    border: 1px solid #d79922;
-    padding: 10px;
+    border: 1px solid #b48731;
+    padding: 15px;
     border-radius: 3px;
     background-color: #fff;
-    color: #d79922b0;
-    font-size: 20px;
+    color: #b48731;
+    font-size: 15px;
     margin: 10px 15px;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 1.5px;
  }
 
  .adminHeader .isActive {
-    background-color: #d79922;
+    background-color: #b48731;
     color: #fff;
  } 
 
@@ -360,12 +364,12 @@ a.info {
 /**
  * Partie admin -> Statistiques
  */ 
- td  {
+ td {
     padding: 20px;
     text-align: center;
 }
 
-th  {
+th {
     padding: 20px;
     background-color: #255E33;
     color: #fff;
@@ -384,12 +388,41 @@ tr:nth-child(even) {
     background-color: #efe1ba; 
 }
 
-.sort-indicator {
+.sortIndicator {
     cursor: pointer;
 }
 
-.active {
-    color: red;
+.sortIndicator i {
+    font-size: 18px;
+}
+
+.activeSortIndicator {
+    color: #fff
+}
+
+.activeSortIndicator i {
+    font-size: 18px;
+}
+
+.tableHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+.tableHeader p {
+    text-align: left;
+}
+
+.tableIcons {
+    display: flex;
+}
+
+.tableIcons a {
+    padding: 0 4px;
+    color: #ffffff4a;
 }
 
 /** 

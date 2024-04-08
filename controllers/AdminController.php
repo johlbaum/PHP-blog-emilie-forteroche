@@ -41,6 +41,11 @@ class AdminController
         $articleManager = new ArticleManager;
         $statisticsService = new StatisticsService($commentManager, $articleManager);
 
+        //On récupère le type de tri (croissant ou décroissant) et la donnée que l'utilisateur souhaite trier.
+        $type = Utils::request('type');
+        $sortBy = Utils::request('sortby');
+
+        //On récupère les données du tableau.
         $articles = $statisticsService->getArticle();
         $totalCommentsByArticles = $statisticsService->getTotalCommentsByArticles();
         $totalViewsByArticles = $statisticsService->getTotalViewsByArticles();
@@ -53,6 +58,8 @@ class AdminController
                 'articles' => $articles,
                 'totalCommentsByArticles' => $totalCommentsByArticles,
                 'totalViewsByArticles' => $totalViewsByArticles,
+                'type' => $type,
+                'sortBy' => $sortBy
             ]
         );
     }
