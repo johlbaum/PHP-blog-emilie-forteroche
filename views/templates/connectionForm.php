@@ -1,7 +1,8 @@
 <?php
-    /**
-     * Template pour afficher le formulaire de connexion.
-     */
+
+/**
+ * Template pour afficher le formulaire de connexion.
+ */
 ?>
 
 <div class="connection-form">
