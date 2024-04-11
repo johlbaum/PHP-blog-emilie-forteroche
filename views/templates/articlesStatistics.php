@@ -16,11 +16,11 @@
                 <div class="tableHeader">
                     <p>Titre de l'article</p>
                     <div class="tableIcons">
-                        <a href="index.php?action=statistics&type=article&sortby=desc">
-                            <span class="<?php echo $sortBy === "desc" && $type === "article" ? "activeSortIndicator" : "sortIndicator " ?>"><i class="fa-solid fa-arrow-down"></i></span>
+                        <a href="index.php?action=statistics&type=title&sortby=desc">
+                            <span class="<?php echo $sortBy === "desc" && $type === "title" ? "activeSortIndicator" : "sortIndicator " ?>"><i class="fa-solid fa-arrow-down"></i></span>
                         </a>
-                        <a href="index.php?action=statistics&type=article&sortby=asc">
-                            <span class="<?php echo $sortBy === "asc" && $type === "article" ? "activeSortIndicator" : "sortIndicator " ?>"><i class="fa-solid fa-arrow-up"></i></span>
+                        <a href="index.php?action=statistics&type=title&sortby=asc">
+                            <span class="<?php echo $sortBy === "asc" && $type === "title" ? "activeSortIndicator" : "sortIndicator " ?>"><i class="fa-solid fa-arrow-up"></i></span>
                         </a>
                     </div>
                 </div>

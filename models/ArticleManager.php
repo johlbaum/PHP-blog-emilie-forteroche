@@ -158,4 +158,22 @@ class ArticleManager extends AbstractEntityManager
 
         return $articlesByCreationDate;
     }
+
+    /**
+     * Récupère les articles triés par titre. 
+     * @param string $orderDirection : l'ordre dans lequel on souhaite trier les articles.
+     * @return array
+     */
+    public function getSortedArticlesByTitle(string $orderDirection): array
+    {
+        $sql = "SELECT * FROM article ORDER BY title $orderDirection";
+        $result = $this->db->query($sql);
+        $articlesByTitle = [];
+
+        while ($article = $result->fetch()) {
+            $articlesByTitle[] = new Article($article);
+        }
+
+        return $articlesByTitle;
+    }
 }

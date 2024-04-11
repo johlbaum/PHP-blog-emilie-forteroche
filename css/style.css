@@ -420,8 +420,7 @@ tr:nth-child(even) {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    text-transform: uppercase;
-    font-weight: 500;
+    font-weight: 600;
 }
 
 .tableHeader p {

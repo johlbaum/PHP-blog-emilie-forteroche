@@ -5,6 +5,9 @@
  */
 class StatisticsService
 {
+    const SORT_ASC = 'asc';
+    const SORT_DESC = 'desc';
+
     private CommentManager $commentManager;
     private ArticleManager $articleManager;
 
@@ -33,15 +36,21 @@ class StatisticsService
      */
     public function sortManager(string $type, string $sortBy): void
     {
-        if ($type === "comment") {
-            $this->updateCommentsCountOrder($sortBy);
-            $this->updateArticlesOrderAfterCommentsSort($this->commentsCountByArticles);
-        } elseif ($type === "views") {
-            $this->updateViewsCountOrder($sortBy);
-        } elseif ($type === "date") {
-            $this->updateArticleByCreationDateOrder($sortBy);
-        } else {
-            throw new Exception("Type de données invalide.");
+        switch ($type) {
+            case "title":
+                $this->updateArticleOrderByTitle($sortBy);
+                break;
+            case "comment":
+                $this->updateCommentsCountOrder($sortBy);
+                break;
+            case "views":
+                $this->updateViewsCountOrder($sortBy);
+                break;
+            case "date":
+                $this->updateArticleOrderByCreationDate($sortBy);
+                break;
+            default:
+                throw new Exception("Type de données invalide.");
         }
     }
 
@@ -52,12 +61,14 @@ class StatisticsService
      */
     private function updateCommentsCountOrder($sortBy): void
     {
-        if ($sortBy === "asc" || $sortBy === "desc") {
+        if ($sortBy === self::SORT_ASC || $sortBy === self::SORT_DESC) {
             $sortedCommentsCountByArticle = $this->commentManager->getSortedCommentsCountByArticles($sortBy);
             $this->commentsCountByArticles = $sortedCommentsCountByArticle;
         } else {
             throw new Exception("Ordre de tri invalide.");
         }
+
+        $this->updateArticlesOrderAfterCommentsSort($this->commentsCountByArticles);
     }
 
     /**
@@ -87,7 +98,7 @@ class StatisticsService
      */
     private function updateViewsCountOrder(string $sortBy): void
     {
-        if ($sortBy === "asc" || $sortBy === "desc") {
+        if ($sortBy === self::SORT_ASC || $sortBy === self::SORT_DESC) {
             $sortedViewsCountByArticle = $this->articleManager->getSortedViewsCountByArticles($sortBy);
             $this->articles = $sortedViewsCountByArticle;
         } else {
@@ -100,11 +111,26 @@ class StatisticsService
      * @param string $sortBy : l'ordre dans lequel on souhaite trier les dates.
      * @return void
      */
-    private function updateArticleByCreationDateOrder(string $sortBy): void
+    private function updateArticleOrderByCreationDate(string $sortBy): void
     {
-        if ($sortBy === "asc" || $sortBy === "desc") {
+        if ($sortBy === self::SORT_ASC || $sortBy === self::SORT_DESC) {
             $sortedArticleByCreationDate = $this->articleManager->getSortedArticlesByCreationDate($sortBy);
             $this->articles = $sortedArticleByCreationDate;
+        } else {
+            throw new Exception("Ordre de tri invalide.");
+        }
+    }
+
+    /**
+     * Mets à jour le tableau d'articles en le triant par titre.
+     * @param string $sortBy : l'ordre dans lequel on souhaite trier les titres.
+     * @return void
+     */
+    private function updateArticleOrderByTitle(string $sortBy): void
+    {
+        if ($sortBy === self::SORT_ASC || $sortBy === self::SORT_DESC) {
+            $sortedArticleByTitle = $this->articleManager->getSortedArticlesByTitle($sortBy);
+            $this->articles = $sortedArticleByTitle;
         } else {
             throw new Exception("Ordre de tri invalide.");
         }
@@ -121,7 +147,7 @@ class StatisticsService
 
     /**
      * Getter pour le nombre total de commentaires.
-     * @return array : un tableau associatif avec l'ID de chaque article comme clé et le total des commentaires pour cet article comme valeur.
+     * @return array : un tableau associatif avec l'ID de chaque article comme clé et le total des commentaires comme valeur.
      */
     public function getCommentsCountByArticles(): array
     {
