@@ -312,10 +312,9 @@ a.info {
     padding-left: 25px;
  }
 
-.adminHeader h2 {
+.adminHeader h2 a {
     width: auto;
     border: 1px solid #b48731;
-    padding: 15px;
     border-radius: 3px;
     background-color: #fff;
     color: #b48731;
@@ -324,12 +323,21 @@ a.info {
     text-transform: uppercase;
     font-weight: 600;
     letter-spacing: 1.5px;
+    cursor: pointer;
  }
 
- .adminHeader .isActive {
+ .adminHeader h2 {
+    width: auto;
+ }
+
+.adminHeader h2 a {
+    padding: 15px;
+}
+
+.adminHeader .isActive a {
     background-color: #b48731;
     color: #fff;
- } 
+}
 
 .adminArticle {
     margin-bottom: 20px;
@@ -402,6 +410,10 @@ tr:nth-child(even) {
 
 .activeSortIndicator i {
     font-size: 18px;
+}
+
+.sortIndicator i:hover {
+    color: #fff;
 }
 
 .tableHeader {

@@ -45,10 +45,15 @@ class AdminController
         $type = Utils::request('type');
         $sortBy = Utils::request('sortby');
 
+        //On effectue le tri de la donnée.
+        if (!empty($type) && !empty($sortBy)) {
+            $statisticsService->sortManager($type, $sortBy);
+        }
+
         //On récupère les données du tableau.
         $articles = $statisticsService->getArticle();
-        $totalCommentsByArticles = $statisticsService->getTotalCommentsByArticles();
-        $totalViewsByArticles = $statisticsService->getTotalViewsByArticles();
+        $commentsCountByArticles = $statisticsService->getCommentsCountByArticles();
+        $viewsCountByArticles = $statisticsService->getViewsCountByArticles();
 
         // On affiche le tableau.
         $view = new View("Statistics");
@@ -56,8 +61,8 @@ class AdminController
             "articlesStatistics",
             [
                 'articles' => $articles,
-                'totalCommentsByArticles' => $totalCommentsByArticles,
-                'totalViewsByArticles' => $totalViewsByArticles,
+                'commentsCountByArticles' => $commentsCountByArticles,
+                'viewsCountByArticles' => $viewsCountByArticles,
                 'type' => $type,
                 'sortBy' => $sortBy
             ]
