@@ -38,6 +38,9 @@ class StatisticsService
         if ($type === "comment") {
             $this->updateCommentsCountOrder($sortBy);
             $this->updateArticleOrder($this->commentsCountByArticles);
+        } elseif ($type === "views") {
+            $this->updateViewsCountOrder($sortBy);
+            $this->updateArticleOrder($this->viewsCountByArticles);
         } else {
             throw new Exception("Type de données invalide.");
         }
@@ -53,6 +56,21 @@ class StatisticsService
         if ($sortBy === "asc" || $sortBy === "desc") {
             $sortedCommentsCountByArticle = $this->commentManager->getSortedCommentsCountByArticles($sortBy);
             $this->commentsCountByArticles = $sortedCommentsCountByArticle;
+        } else {
+            throw new Exception("Ordre de tri invalide.");
+        }
+    }
+
+    /**
+     * Mets à jour le tableau du total des vues par article en le classant par ordre croissant ou décroissant.
+     * @param string $sortBy : l'ordre dans lequel on souhaite trier les vues.
+     * @return void
+     */
+    private function updateViewsCountOrder(string $sortBy): void
+    {
+        if ($sortBy === "asc" || $sortBy === "desc") {
+            $sortedViewsCountByArticle = $this->articleManager->getSortedViewsCountByArticles($sortBy);
+            $this->viewsCountByArticles = $sortedViewsCountByArticle;
         } else {
             throw new Exception("Ordre de tri invalide.");
         }

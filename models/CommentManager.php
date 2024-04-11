@@ -85,7 +85,7 @@ class CommentManager extends AbstractEntityManager
     /**
      * Récupère le total des commentaires triés pour chaque article.
      * @param string $orderDirection : l'ordre dans lequel on souhaite trier les commentaires.
-     * @return array : un tableau associatif avec l'ID de chaque article comme clé et le total des commentaires pour cet article comme valeur triés par ordre croissant ou décroissant.
+     * @return array : un tableau associatif avec l'ID de chaque article comme clé et le total des commentaires pour cet article comme valeur, triés par ordre croissant ou décroissant.
      */
     public function getSortedCommentsCountByArticles(string $orderDirection): array
     {

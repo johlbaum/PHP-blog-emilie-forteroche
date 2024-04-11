@@ -110,6 +110,23 @@ class ArticleManager extends AbstractEntityManager
     }
 
     /**
+     * Récupère le total des vues triées pour chaque article.
+     * @param string $orderDirection : l'ordre dans lequel on souhaite trier les vues.
+     * @return array : un tableau associatif avec l'ID de chaque article comme clé et le total des vues pour cet article comme valeur, triés par ordre croissant ou décroissant.
+     */
+    public function getSortedViewsCountByArticles(string $orderDirection): array
+    {
+        $sql = "SELECT id, SUM(views) AS total_views FROM article GROUP BY id ORDER BY total_views $orderDirection";
+        $result = $this->db->query($sql);
+        $sortedViewsCountByArticles = [];
+
+        while ($article = $result->fetch(PDO::FETCH_OBJ)) {
+            $sortedViewsCountByArticles[$article->id] = $article->total_views;
+        }
+        return $sortedViewsCountByArticles;
+    }
+
+    /**
      * Incrémente le nombre de vues d'un article de 1 lors de sa consutation.
      * @param int $id : l'id de l'article pour lequel on augmente le nombre de vues.
      * @return void
