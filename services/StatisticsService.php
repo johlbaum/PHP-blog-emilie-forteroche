@@ -10,7 +10,6 @@ class StatisticsService
 
     private array $articles;
     private array $commentsCountByArticles;
-    private array $viewsCountByArticles;
 
     /**
      * Constructeur de la classe StatisticsService.
@@ -24,7 +23,6 @@ class StatisticsService
 
         $this->articles = $this->articleManager->getAllArticles();
         $this->commentsCountByArticles = $this->commentManager->getCommentsCountByArticles($this->articles);
-        $this->viewsCountByArticles = $this->articleManager->getViewsCountByArticles();
     }
 
     /**
@@ -37,10 +35,11 @@ class StatisticsService
     {
         if ($type === "comment") {
             $this->updateCommentsCountOrder($sortBy);
-            $this->updateArticleOrder($this->commentsCountByArticles);
+            $this->updateArticlesOrderAfterCommentsSort($this->commentsCountByArticles);
         } elseif ($type === "views") {
             $this->updateViewsCountOrder($sortBy);
-            $this->updateArticleOrder($this->viewsCountByArticles);
+        } elseif ($type === "date") {
+            $this->updateArticleByCreationDateOrder($sortBy);
         } else {
             throw new Exception("Type de données invalide.");
         }
@@ -51,7 +50,7 @@ class StatisticsService
      * @param string $sortBy : l'ordre dans lequel on souhaite trier les commentaires.
      * @return void
      */
-    private function updateCommentsCountOrder(string $sortBy): void
+    private function updateCommentsCountOrder($sortBy): void
     {
         if ($sortBy === "asc" || $sortBy === "desc") {
             $sortedCommentsCountByArticle = $this->commentManager->getSortedCommentsCountByArticles($sortBy);
@@ -59,6 +58,26 @@ class StatisticsService
         } else {
             throw new Exception("Ordre de tri invalide.");
         }
+    }
+
+    /**
+     * Aligne l'ordre des articles que l'on va envoyer à la vue sur l'ordre des articles qui découle du tri des commentaires.
+     * @param array $sortedTypeCount : un tableau associatif avec l'ID de chaque article comme clé et le total du type de données (total commentaires, total vues, etc.) comme valeur, triées par ordre croissant ou décroissant.
+     * @return void
+     */
+    private function updateArticlesOrderAfterCommentsSort(array $commentsCountByArticles): void
+    {
+        $sortedArticles = [];
+        foreach ($commentsCountByArticles as $articleId => $count) {
+            foreach ($this->articles as $article) {
+                if ($article->getId() === $articleId) {
+                    $sortedArticles[] = $article;
+                    break;
+                }
+            }
+        }
+
+        $this->articles = $sortedArticles;
     }
 
     /**
@@ -70,30 +89,25 @@ class StatisticsService
     {
         if ($sortBy === "asc" || $sortBy === "desc") {
             $sortedViewsCountByArticle = $this->articleManager->getSortedViewsCountByArticles($sortBy);
-            $this->viewsCountByArticles = $sortedViewsCountByArticle;
+            $this->articles = $sortedViewsCountByArticle;
         } else {
             throw new Exception("Ordre de tri invalide.");
         }
     }
 
     /**
-     * Aligne l'ordre des articles que l'on va envoyer à la vue sur l'ordre des articles qui découle du tri des données.
-     * @param array $sortedTypeCount : un tableau associatif avec l'ID de chaque article comme clé et le total du type de données (total commentaires, total vues, etc.) comme valeur, triées par ordre croissant ou décroissant.
+     * Mets à jour le tableau d'articles en le triant par date.
+     * @param string $sortBy : l'ordre dans lequel on souhaite trier les dates.
      * @return void
      */
-    private function updateArticleOrder(array $sortedTypeCount): void
+    private function updateArticleByCreationDateOrder(string $sortBy): void
     {
-        $sortedArticles = [];
-        foreach ($sortedTypeCount as $articleId => $count) {
-            foreach ($this->articles as $article) {
-                if ($article->getId() === $articleId) {
-                    $sortedArticles[] = $article;
-                    break;
-                }
-            }
+        if ($sortBy === "asc" || $sortBy === "desc") {
+            $sortedArticleByCreationDate = $this->articleManager->getSortedArticlesByCreationDate($sortBy);
+            $this->articles = $sortedArticleByCreationDate;
+        } else {
+            throw new Exception("Ordre de tri invalide.");
         }
-
-        $this->articles = $sortedArticles;
     }
 
     /**
@@ -112,14 +126,5 @@ class StatisticsService
     public function getCommentsCountByArticles(): array
     {
         return $this->commentsCountByArticles;
-    }
-
-    /**
-     * Getter pour le nombre total de vues des articles.
-     * @return int : un tableau associatif avec l'ID de chaque article comme clé et le total des vues pour cet article comme valeur.
-     */
-    public function getViewsCountByArticles(): array
-    {
-        return $this->viewsCountByArticles;
     }
 }

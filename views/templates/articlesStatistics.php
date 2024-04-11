@@ -67,10 +67,11 @@
         </tr>
     </thead>
     <tbody>
-        <?php foreach ($articles as $article) { ?>
+        <?php foreach ($articles as $article) {
+        ?>
             <tr>
                 <td><?= $article->getTitle() ?></td>
-                <td><?= $viewsCountByArticles[$article->getId()] ?></td>
+                <td><?= $article->getViews() ?></td>
                 <td><?= $commentsCountByArticles[$article->getId()] ?></td>
                 <td><?= Utils::convertDateToFrenchFormat($article->getDateCreation()) ?></td>
             </tr>

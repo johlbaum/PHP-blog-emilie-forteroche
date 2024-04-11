@@ -19,6 +19,7 @@ class CommentManager extends AbstractEntityManager
         while ($comment = $result->fetch()) {
             $comments[] = new Comment($comment);
         }
+
         return $comments;
     }
 
@@ -35,6 +36,7 @@ class CommentManager extends AbstractEntityManager
         if ($comment) {
             return new Comment($comment);
         }
+
         return null;
     }
 
@@ -51,6 +53,7 @@ class CommentManager extends AbstractEntityManager
             'content' => $comment->getContent(),
             'idArticle' => $comment->getIdArticle()
         ]);
+
         return $result->rowCount() > 0;
     }
 
@@ -63,6 +66,7 @@ class CommentManager extends AbstractEntityManager
     {
         $sql = "DELETE FROM comment WHERE id = :id";
         $result = $this->db->query($sql, ['id' => $comment->getId()]);
+
         return $result->rowCount() > 0;
     }
 
@@ -79,6 +83,7 @@ class CommentManager extends AbstractEntityManager
             $allCommentsByArticleId = $this->getAllCommentsByArticleId($article->getId());
             $commentsCountByArticles[$article->getId()] = count($allCommentsByArticleId);
         }
+
         return $commentsCountByArticles;
     }
 
@@ -96,6 +101,7 @@ class CommentManager extends AbstractEntityManager
         while ($article = $result->fetch(PDO::FETCH_OBJ)) {
             $sortedCommentsCountByArticles[$article->id_article] = $article->total_comments;
         }
+
         return $sortedCommentsCountByArticles;
     }
 }

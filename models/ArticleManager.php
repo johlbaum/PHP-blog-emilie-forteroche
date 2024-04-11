@@ -18,6 +18,7 @@ class ArticleManager extends AbstractEntityManager
         while ($article = $result->fetch()) {
             $articles[] = new Article($article);
         }
+
         return $articles;
     }
 
@@ -34,6 +35,7 @@ class ArticleManager extends AbstractEntityManager
         if ($article) {
             return new Article($article);
         }
+
         return null;
     }
 
@@ -106,6 +108,7 @@ class ArticleManager extends AbstractEntityManager
         while ($article = $result->fetch(PDO::FETCH_OBJ)) {
             $articleViews[$article->id] = $article->views;
         }
+
         return $articleViews;
     }
 
@@ -116,13 +119,14 @@ class ArticleManager extends AbstractEntityManager
      */
     public function getSortedViewsCountByArticles(string $orderDirection): array
     {
-        $sql = "SELECT id, SUM(views) AS total_views FROM article GROUP BY id ORDER BY total_views $orderDirection";
+        $sql = "SELECT *, SUM(views) AS total_views FROM article GROUP BY id ORDER BY total_views $orderDirection";
         $result = $this->db->query($sql);
         $sortedViewsCountByArticles = [];
 
-        while ($article = $result->fetch(PDO::FETCH_OBJ)) {
-            $sortedViewsCountByArticles[$article->id] = $article->total_views;
+        while ($article = $result->fetch()) {
+            $sortedViewsCountByArticles[] = new Article($article);
         }
+
         return $sortedViewsCountByArticles;
     }
 
@@ -135,5 +139,23 @@ class ArticleManager extends AbstractEntityManager
     {
         $sql = "UPDATE article SET views = views + 1 WHERE id = :article_id";
         $this->db->query($sql, ['article_id' => $id]);
+    }
+
+    /**
+     * Récupère les articles triés par date de création croissante ou décroissante.. 
+     * @param string $orderDirection : l'ordre dans lequel on souhaite trier les articles.
+     * @return array
+     */
+    public function getSortedArticlesByCreationDate(string $orderDirection): array
+    {
+        $sql = "SELECT * FROM article ORDER BY date_creation $orderDirection";
+        $result = $this->db->query($sql);
+        $articlesByCreationDate = [];
+
+        while ($article = $result->fetch()) {
+            $articlesByCreationDate[] = new Article($article);
+        }
+
+        return $articlesByCreationDate;
     }
 }
