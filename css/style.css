@@ -401,7 +401,11 @@ a.info {
 /**
  * Partie admin -> Statistiques
  */ 
- td {
+tr {
+    height: 80px;
+}
+
+td {
     padding: 20px;
     text-align: center;
 }
@@ -416,13 +420,13 @@ tr td:first-child {
     text-align: left;
 }
 
-tr:nth-child(odd) {
-    background-color: #99a140;
-    color: #fff; 
+.evenRow {
+    background-color: #efe1ba; 
 }
 
-tr:nth-child(even) {
-    background-color: #efe1ba; 
+.oddRow {
+    background-color: #99a140;
+    color: #fff; 
 }
 
 .sortIndicator {

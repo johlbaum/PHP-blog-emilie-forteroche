@@ -67,9 +67,12 @@
         </tr>
     </thead>
     <tbody>
-        <?php foreach ($articles as $article) {
+        <?php
+        $rowNum = 0;
+        foreach ($articles as $article) {
+            $rowNum++;
         ?>
-            <tr>
+            <tr <?= $rowNum % 2 === 0 ? 'class="evenRow"' : 'class="oddRow"' ?>>
                 <td><?= $article->getTitle() ?></td>
                 <td><?= $article->getViews() ?></td>
                 <td><?= $commentsCountByArticles[$article->getId()] ?></td>
