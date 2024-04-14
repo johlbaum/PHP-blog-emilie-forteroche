@@ -34,8 +34,10 @@ class ArticleController
         $commentManager = new CommentManager();
         $comments = $commentManager->getAllCommentsByArticleId($id);
 
-        //Incrémentation du nombre de vues de 1 lors de la consultation d'un article.
-        $articleManager->incrementArticleViews($id);
+        // Incrémentation du nombre de vues de 1 lors de la consultation d'un article, seulement si l'administrateur n'est pas connecté.
+        if (!isset($_SESSION['user'])) {
+            $articleManager->incrementArticleViews($id);
+        }
 
         $view = new View($article->getTitle());
         $view->render(
