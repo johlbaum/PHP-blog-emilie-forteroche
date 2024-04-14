@@ -244,6 +244,35 @@ a.info {
 }
 
 /* Affichage des commentaires */
+.commentBlock {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.commentContent {
+    width: 80%;
+    display: flex;
+}
+
+.deleteCommentButton {
+    width: 20%;
+    text-align: end;
+}
+
+.deleteCommentButton a {
+    padding: 8px;
+    background-color: red;
+    color: #fff;
+    border-radius: 3px;
+    font-size: 13px;
+}
+
+.deleteCommentButton a i {
+    padding-right: 10px;
+}
+
 .comments {
     width: 100%;
     margin-top: 30px;

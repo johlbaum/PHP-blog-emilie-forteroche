@@ -51,7 +51,7 @@ class AdminController
         }
 
         //On récupère les articles et les commentaires.
-        $articles = $statisticsService->getArticle();
+        $articles = $statisticsService->getArticles();
         $commentsCountByArticles = $statisticsService->getCommentsCountByArticles();
 
         // On affiche le tableau.
@@ -217,5 +217,24 @@ class AdminController
 
         // On redirige vers la page d'administration.
         Utils::redirect("admin");
+    }
+
+    /**
+     * Suppression d'un commentaire.
+     * @return void
+     */
+    public function deleteComment(): void
+    {
+        $this->checkIfUserIsConnected();
+
+        $commentId = Utils::request("id", -1);
+
+        $commentManager = new CommentManager();
+        $comment = $commentManager->getCommentById($commentId);
+        $commentManager->deleteComment($comment);
+
+        $idArticle = $comment->getIdArticle();
+
+        Utils::redirect("showArticle", ['id' => $idArticle]);
     }
 }

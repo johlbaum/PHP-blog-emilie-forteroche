@@ -140,7 +140,7 @@ class StatisticsService
      * Getter pour la liste des articles.
      * @return array : un tableau d'objets Article.
      */
-    public function getArticle(): array
+    public function getArticles(): array
     {
         return $this->articles;
     }

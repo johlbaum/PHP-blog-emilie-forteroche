@@ -14,7 +14,7 @@
     <div class="footer">
         <span class="info"> Publié le <?= Utils::convertDateToFrenchFormat($article->getDateCreation()) ?></span>
         <?php if ($article->getDateUpdate() != null) { ?>
-            <span class="info"> Modifié le <?= Utils::convertDateToFrenchFormat($article->getDateUpdate()) ?></span>
+        <span class="info"> Modifié le <?= Utils::convertDateToFrenchFormat($article->getDateUpdate()) ?></span>
         <?php } ?>
     </div>
 </article>
@@ -28,10 +28,17 @@
         echo '<ul>';
         foreach ($comments as $comment) {
             echo '<li>';
-            echo '  <div class="smiley">☻</div>';
-            echo '  <div class="detailComment">';
-            echo '      <h3 class="info">Le ' . Utils::convertDateToFrenchFormat($comment->getDateCreation()) . ", " . Utils::format($comment->getPseudo()) . ' a écrit :</h3>';
-            echo '      <p class="content">' . Utils::format($comment->getContent()) . '</p>';
+            echo '  <div class="commentBlock">';
+            echo '      <div class="commentContent">';
+            echo '          <div class="smiley">☻</div>';
+            echo '          <div class="detailComment">';
+            echo '              <h3 class="info">Le ' . Utils::convertDateToFrenchFormat($comment->getDateCreation()) . ", " . Utils::format($comment->getPseudo()) . ' a écrit :</h3>';
+            echo '              <p class="content">' . Utils::format($comment->getContent()) . '</p>';
+            echo '          </div>';
+            echo '      </div>';
+            if ($isConnected) {
+                echo    '<div class="deleteCommentButton"><a href="index.php?action=deleteComment&id=' . $comment->getId() . '" ' . Utils::askConfirmation("Êtes-vous sûr de vouloir supprimer ce commentaire ?") . '><i class="fa-solid fa-trash"></i>Supprimer</a></div>';
+            }
             echo '  </div>';
             echo '</li>';
         }
