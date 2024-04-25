@@ -69,39 +69,4 @@ class CommentManager extends AbstractEntityManager
 
         return $result->rowCount() > 0;
     }
-
-    /**
-     * Récupère le total des commentaires pour chaque article.
-     * @param array $articles : un tableau d'objets Article.
-     * @return array : un tableau associatif avec l'ID de chaque article comme clé et le total des commentaires pour cet article comme valeur.
-     */
-    public function getCommentsCountByArticles(array $articles): array
-    {
-        $commentsCountByArticles = [];
-
-        foreach ($articles as $article) {
-            $allCommentsByArticleId = $this->getAllCommentsByArticleId($article->getId());
-            $commentsCountByArticles[$article->getId()] = count($allCommentsByArticleId);
-        }
-
-        return $commentsCountByArticles;
-    }
-
-    /**
-     * Récupère le total des commentaires triés pour chaque article.
-     * @param string $orderDirection : l'ordre dans lequel on souhaite trier les commentaires.
-     * @return array : un tableau associatif avec l'ID de chaque article comme clé et le total des commentaires pour cet article comme valeur, triés par ordre croissant ou décroissant.
-     */
-    public function getSortedCommentsCountByArticles(string $orderDirection): array
-    {
-        $sql = "SELECT id_article, COUNT(*) AS total_comments FROM comment GROUP BY id_article ORDER BY total_comments $orderDirection";
-        $result = $this->db->query($sql);
-        $sortedCommentsCountByArticles = [];
-
-        while ($article = $result->fetch(PDO::FETCH_OBJ)) {
-            $sortedCommentsCountByArticles[$article->id_article] = $article->total_comments;
-        }
-
-        return $sortedCommentsCountByArticles;
-    }
 }

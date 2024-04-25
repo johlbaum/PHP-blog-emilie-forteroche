@@ -96,42 +96,7 @@ class ArticleManager extends AbstractEntityManager
     }
 
     /**
-     * Récupère le total des vues pour chaque article.
-     * @return array : un tableau associatif avec l'ID de chaque article comme clé et le total des vues pour cet article comme valeur.
-     */
-    public function getViewsCountByArticles(): array
-    {
-        $sql = "SELECT id, views FROM article";
-        $result = $this->db->query($sql);
-        $articleViews = [];
-
-        while ($article = $result->fetch(PDO::FETCH_OBJ)) {
-            $articleViews[$article->id] = $article->views;
-        }
-
-        return $articleViews;
-    }
-
-    /**
-     * Récupère le total des vues triées pour chaque article.
-     * @param string $orderDirection : l'ordre dans lequel on souhaite trier les vues.
-     * @return array : un tableau associatif avec l'ID de chaque article comme clé et le total des vues pour cet article comme valeur, triés par ordre croissant ou décroissant.
-     */
-    public function getSortedViewsCountByArticles(string $orderDirection): array
-    {
-        $sql = "SELECT *, SUM(views) AS total_views FROM article GROUP BY id ORDER BY total_views $orderDirection";
-        $result = $this->db->query($sql);
-        $sortedViewsCountByArticles = [];
-
-        while ($article = $result->fetch()) {
-            $sortedViewsCountByArticles[] = new Article($article);
-        }
-
-        return $sortedViewsCountByArticles;
-    }
-
-    /**
-     * Incrémente le nombre de vues d'un article de 1 lors de sa consutation.
+     * Incrémente le nombre de vues d'un article de 1 lors de sa consultation.
      * @param int $id : l'id de l'article pour lequel on augmente le nombre de vues.
      * @return void
      */
@@ -142,38 +107,62 @@ class ArticleManager extends AbstractEntityManager
     }
 
     /**
-     * Récupère les articles triés par date de création croissante ou décroissante.. 
-     * @param string $orderDirection : l'ordre dans lequel on souhaite trier les articles.
-     * @return array
+     * Récupère tous les articles avec le nombre de commentaires associés à chaque article. 
+     * @return array : un tableau d'objets Article.
      */
-    public function getSortedArticlesByCreationDate(string $orderDirection): array
+    public function getArticlesWithCommentsCount(): array
     {
-        $sql = "SELECT * FROM article ORDER BY date_creation $orderDirection";
+        $sql = "SELECT 
+                    article.*,
+                    COUNT(comment.id) AS comments_count
+                FROM 
+                    article
+                LEFT JOIN 
+                    comment
+                ON
+                    article.id = comment.id_article
+                GROUP BY
+                    article.id
+                ";
         $result = $this->db->query($sql);
-        $articlesByCreationDate = [];
+        $articleswithCommentsCount = [];
 
         while ($article = $result->fetch()) {
-            $articlesByCreationDate[] = new Article($article);
+            $articleswithCommentsCount[] = new Article($article);
         }
 
-        return $articlesByCreationDate;
+        return $articleswithCommentsCount;
     }
 
     /**
-     * Récupère les articles triés par titre. 
-     * @param string $orderDirection : l'ordre dans lequel on souhaite trier les articles.
-     * @return array
+     * Récupère tous les articles triés avec le nombre de commentaires associés à chaque article.
+     * @param string $sortBy : le critère de tri (tri par titre, vues, nombre de commentaires et date de création).
+     * @param string $sortOrder : l'ordre dans lequel on souhaite trier les articles (croissant ou décroissant).
+     * @return array : un tableau d'objets Article.
      */
-    public function getSortedArticlesByTitle(string $orderDirection): array
+    public function getSortedArticlesWithCommentsCount(string $sortBy, string $sortOrder): array
     {
-        $sql = "SELECT * FROM article ORDER BY title $orderDirection";
+        $sql = "SELECT 
+                    article.*,
+                    COUNT(comment.id) AS comments_count
+                FROM 
+                    article
+                LEFT JOIN 
+                    comment
+                ON
+                    article.id = comment.id_article
+                GROUP BY
+                    article.id
+                ORDER BY 
+                    $sortBy $sortOrder
+                ";
         $result = $this->db->query($sql);
-        $articlesByTitle = [];
+        $sortedArticlesWithCommentsCount = [];
 
         while ($article = $result->fetch()) {
-            $articlesByTitle[] = new Article($article);
+            $sortedArticlesWithCommentsCount[] = new Article($article);
         }
 
-        return $articlesByTitle;
+        return $sortedArticlesWithCommentsCount;
     }
 }

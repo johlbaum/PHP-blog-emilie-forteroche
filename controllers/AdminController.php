@@ -36,23 +36,20 @@ class AdminController
         // On vérifie que l'utilisateur est connecté.
         $this->checkIfUserIsConnected();
 
-        // On récupère les données.
-        $commentManager = new CommentManager;
         $articleManager = new ArticleManager;
-        $statisticsService = new StatisticsService($commentManager, $articleManager);
+        $statisticsService = new StatisticsService($articleManager);
 
-        //On récupère le type de tri (croissant ou décroissant) et la donnée que l'utilisateur souhaite trier.
-        $type = Utils::request('type');
-        $sortBy = Utils::request('sortby');
+        //On récupère le critère de tri (tri par titre, vues, nombre de commentaires et date de création) et l'ordre dans lequel on souhaite trier les articles (croissant ou décroissant).
+        $sortBy = Utils::request('sortBy');
+        $sortOrder = Utils::request('sortOrder');
 
-        //On effectue le tri des données.
-        if (!empty($type) && !empty($sortBy)) {
-            $statisticsService->sortManager($type, $sortBy);
+        //On effectue le tri des articles.
+        if (!empty($sortBy) && !empty($sortOrder)) {
+            $statisticsService->sortArticles($sortBy, $sortOrder);
         }
 
-        //On récupère les articles et les commentaires.
+        //On récupère les articles avec le nombre de commentaires associés à chaque article.
         $articles = $statisticsService->getArticles();
-        $commentsCountByArticles = $statisticsService->getCommentsCountByArticles();
 
         // On affiche le tableau.
         $view = new View("Statistics");
@@ -60,9 +57,8 @@ class AdminController
             "articlesStatistics",
             [
                 'articles' => $articles,
-                'commentsCountByArticles' => $commentsCountByArticles,
-                'type' => $type,
-                'sortBy' => $sortBy
+                'sortBy' => $sortBy,
+                'sortOrder' => $sortOrder
             ]
         );
     }

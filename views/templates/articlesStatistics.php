@@ -16,11 +16,11 @@
                 <div class="tableHeader">
                     <p>Titre de l'article</p>
                     <div class="tableIcons">
-                        <a href="index.php?action=statistics&type=title&sortby=desc">
-                            <span class="<?php echo $sortBy === "desc" && $type === "title" ? "activeSortIndicator" : "sortIndicator " ?>"><i class="fa-solid fa-arrow-down"></i></span>
+                        <a href="index.php?action=statistics&sortBy=title&sortOrder=desc">
+                            <span class="<?php echo $sortOrder === "desc" && $sortBy === "title" ? "activeSortIndicator" : "sortIndicator " ?>"><i class="fa-solid fa-arrow-down"></i></span>
                         </a>
-                        <a href="index.php?action=statistics&type=title&sortby=asc">
-                            <span class="<?php echo $sortBy === "asc" && $type === "title" ? "activeSortIndicator" : "sortIndicator " ?>"><i class="fa-solid fa-arrow-up"></i></span>
+                        <a href="index.php?action=statistics&sortBy=title&sortOrder=asc">
+                            <span class="<?php echo $sortOrder === "asc" && $sortBy === "title" ? "activeSortIndicator" : "sortIndicator " ?>"><i class="fa-solid fa-arrow-up"></i></span>
                         </a>
                     </div>
                 </div>
@@ -29,11 +29,11 @@
                 <div class="tableHeader">
                     <p>Nombre de vues</p>
                     <div class="tableIcons">
-                        <a href="index.php?action=statistics&type=views&sortby=desc">
-                            <span class="<?php echo $sortBy === "desc" && $type === "views" ? "activeSortIndicator" : "sortIndicator " ?>"><i class="fa-solid fa-arrow-down"></i></span>
+                        <a href="index.php?action=statistics&sortBy=views&sortOrder=desc">
+                            <span class="<?php echo $sortOrder === "desc" && $sortBy === "views" ? "activeSortIndicator" : "sortIndicator " ?>"><i class="fa-solid fa-arrow-down"></i></span>
                         </a>
-                        <a href="index.php?action=statistics&type=views&sortby=asc">
-                            <span class="<?php echo $sortBy === "asc" && $type === "views" ? "activeSortIndicator" : "sortIndicator " ?>"><i class="fa-solid fa-arrow-up"></i></span>
+                        <a href="index.php?action=statistics&sortBy=views&sortOrder=asc">
+                            <span class="<?php echo $sortOrder === "asc" && $sortBy === "views" ? "activeSortIndicator" : "sortIndicator " ?>"><i class="fa-solid fa-arrow-up"></i></span>
                         </a>
                     </div>
                 </div>
@@ -42,11 +42,11 @@
                 <div class="tableHeader">
                     <p>Nombre de commentaires</p>
                     <div class="tableIcons">
-                        <a href="index.php?action=statistics&type=comment&sortby=desc">
-                            <span class="<?php echo $sortBy === "desc" && $type === "comment" ? "activeSortIndicator" : "sortIndicator" ?>"><i class="fa-solid fa-arrow-down"></i></span>
+                        <a href="index.php?action=statistics&sortBy=comments_count&sortOrder=desc">
+                            <span class="<?php echo $sortOrder === "desc" && $sortBy === "comments_count" ? "activeSortIndicator" : "sortIndicator" ?>"><i class="fa-solid fa-arrow-down"></i></span>
                         </a>
-                        <a href="index.php?action=statistics&type=comment&sortby=asc">
-                            <span class="<?php echo $sortBy === "asc" && $type === "comment" ? "activeSortIndicator" : "sortIndicator" ?>"><i class="fa-solid fa-arrow-up"></i></span>
+                        <a href="index.php?action=statistics&sortBy=comments_count&sortOrder=asc">
+                            <span class="<?php echo $sortOrder === "asc" && $sortBy === "comments_count" ? "activeSortIndicator" : "sortIndicator" ?>"><i class="fa-solid fa-arrow-up"></i></span>
                         </a>
                     </div>
                 </div>
@@ -55,11 +55,11 @@
                 <div class="tableHeader">
                     <p>Date de publication</p>
                     <div class="tableIcons">
-                        <a href="index.php?action=statistics&type=date&sortby=desc">
-                            <span class="<?php echo $sortBy === "desc" && $type === "date" ? "activeSortIndicator" : "sortIndicator" ?>"><i class="fa-solid fa-arrow-down"></i></span>
+                        <a href="index.php?action=statistics&sortBy=date_creation&sortOrder=desc">
+                            <span class="<?php echo $sortOrder === "desc" && $sortBy === "date_creation" ? "activeSortIndicator" : "sortIndicator" ?>"><i class="fa-solid fa-arrow-down"></i></span>
                         </a>
-                        <a href="index.php?action=statistics&type=date&sortby=asc">
-                            <span class="<?php echo $sortBy === "asc" && $type === "date" ? "activeSortIndicator" : "sortIndicator" ?>"><i class="fa-solid fa-arrow-up"></i></span>
+                        <a href="index.php?action=statistics&sortBy=date_creation&sortOrder=asc">
+                            <span class="<?php echo $sortOrder === "asc" && $sortBy === "date_creation" ? "activeSortIndicator" : "sortIndicator" ?>"><i class="fa-solid fa-arrow-up"></i></span>
                         </a>
                     </div>
                 </div>
@@ -68,14 +68,14 @@
     </thead>
     <tbody>
         <?php
-        $rowNum = 0;
+        $rowCount = 0;
         foreach ($articles as $article) {
-            $rowNum++;
+            $rowCount++;
         ?>
-            <tr <?= $rowNum % 2 === 0 ? 'class="evenRow"' : 'class="oddRow"' ?>>
+            <tr <?= $rowCount % 2 === 0 ? 'class="evenRow"' : 'class="oddRow"' ?>>
                 <td><?= $article->getTitle() ?></td>
                 <td><?= $article->getViews() ?></td>
-                <td><?= $commentsCountByArticles[$article->getId()] ?></td>
+                <td><?= $article->getCommentsCount() ?></td>
                 <td><?= Utils::convertDateToFrenchFormat($article->getDateCreation()) ?></td>
             </tr>
         <?php } ?>
