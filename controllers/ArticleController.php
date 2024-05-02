@@ -64,7 +64,7 @@ class ArticleController
      * Affiche la page "à propos".
      * @return void
      */
-    public function showApropos()
+    public function showApropos(): void
     {
         $view = new View("A propos");
         $view->render("apropos");
