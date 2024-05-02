@@ -72,7 +72,7 @@
         foreach ($articles as $article) {
             $rowCount++;
         ?>
-            <tr <?= $rowCount % 2 === 0 ? 'class="evenRow"' : 'class="oddRow"' ?>>
+            <tr class="<?= $rowCount % 2 === 0 ? 'evenRow' : 'oddRow' ?>">
                 <td><?= $article->getTitle() ?></td>
                 <td><?= $article->getViews() ?></td>
                 <td><?= $article->getCommentsCount() ?></td>
