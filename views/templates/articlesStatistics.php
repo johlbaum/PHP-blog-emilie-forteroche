@@ -7,7 +7,7 @@
 
 <div class="adminHeader">
     <h2><a href="index.php?action=admin">Edition des articles</a></h2>
-    <h2 class="isActive"><a href="index.php?action=statistic">Statistique des Articles</a></h2>
+    <h2 class="isActive"><a href="index.php?action=statistics">Statistiques des Articles</a></h2>
 </div>
 <table>
     <thead>
